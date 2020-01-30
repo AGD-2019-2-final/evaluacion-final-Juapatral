@@ -1,4 +1,10 @@
+#! /usr/bin/env python
 import sys
-#
-#  >>> Escriba el codigo del mapper a partir de este punto <<<
-#
+#import numpy as np
+
+for line in sys.stdin:
+    line = line.strip()
+    line = line.split('  ')[1]
+    line = line.split('-')[1] 
+    
+    sys.stdout.write("{}\t1\n".format(line))

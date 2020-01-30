@@ -40,3 +40,29 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+SELECT c1,c5
+FROM tbl0 LATERAL VIEW explode(c5) adTable AS c5
+GROUP BY c5;
+
+SELECT Letras
+FROM tbl0 LATERAL VIEW explode(c5) adTable AS Letras
+GROUP BY Letras;
+
+CREATE TABLE resultado
+AS
+    SELECT DISTINCT letras 
+    FROM (
+        SELECT
+            letras
+        FROM
+            tbl0
+        LATERAL VIEW
+            explode(c5) tbl0 AS letras
+        ) t0
+    ORDER BY letras
+;
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+SELECT * FROM resultado;

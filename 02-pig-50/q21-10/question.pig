@@ -29,3 +29,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+v = FOREACH u GENERATE $1,$4;
+w = FILTER v BY $1 MATCHES 'blue|green';
+STORE w INTO 'output' USING PigStorage('\t');
+
